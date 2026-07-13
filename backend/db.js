@@ -37,7 +37,7 @@ const defaultData = {
   socials: {
     youtube: 'https://www.youtube.com/@mediablastspecials',
     instagram: '',
-    facebook: '',
+    kingschat: 'https://kingschat.online/user/mediablastnetwork',
     twitter: '',
   },
 };

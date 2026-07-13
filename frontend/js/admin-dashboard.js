@@ -71,7 +71,7 @@
       if (content.socials) {
         document.getElementById('socialYoutube').value = content.socials.youtube || '';
         document.getElementById('socialInstagram').value = content.socials.instagram || '';
-        document.getElementById('socialFacebook').value = content.socials.facebook || '';
+        document.getElementById('socialKingschat').value = content.socials.kingschat || '';
         document.getElementById('socialTwitter').value = content.socials.twitter || '';
       }
       renderGallery(content.gallery || []);
@@ -96,7 +96,10 @@
     }
   }
 
-  loadContent();
+  loadContent().catch(function (err) {
+    var list = document.getElementById('galleryList');
+    list.innerHTML = '<p class="admin-status-msg error">Failed to load content: ' + err.message + '</p>';
+  });
 
   /* ---------------- Hero form ---------------- */
   document.getElementById('heroForm').addEventListener('submit', function (e) {
@@ -135,7 +138,7 @@
     var payload = {
       youtube: document.getElementById('socialYoutube').value,
       instagram: document.getElementById('socialInstagram').value,
-      facebook: document.getElementById('socialFacebook').value,
+      kingschat: document.getElementById('socialKingschat').value,
       twitter: document.getElementById('socialTwitter').value,
     };
     apiFetch('/api/admin/socials', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
