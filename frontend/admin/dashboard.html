@@ -26,7 +26,116 @@
 
 <main class="admin-shell">
   <div class="container">
-    <div class="admin-grid">
+
+    <div class="site-tabs" id="siteTabs">
+      <button type="button" class="site-tab" data-site="network">MediaBlast Network</button>
+      <button type="button" class="site-tab" data-site="specials">MediaBlast Specials</button>
+    </div>
+
+    <!-- ==================== MEDIABLAST NETWORK ==================== -->
+    <div id="panels-network" class="admin-grid">
+
+      <!-- Network: Hero -->
+      <div class="admin-panel network-panel">
+        <h2>Hero Title, Tagline &amp; CTA</h2>
+        <form id="netHeroForm">
+          <div class="form-row">
+            <label for="netHeroTitle">Title</label>
+            <input type="text" id="netHeroTitle" name="title">
+          </div>
+          <div class="form-row">
+            <label for="netHeroTagline">Tagline</label>
+            <textarea id="netHeroTagline" name="tagline" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="netHeroCtaText">CTA Button Text</label>
+            <input type="text" id="netHeroCtaText" name="ctaText">
+          </div>
+          <div class="form-row">
+            <label for="netHeroCtaLink">CTA Button Link</label>
+            <input type="text" id="netHeroCtaLink" name="ctaLink" placeholder="live.html">
+          </div>
+          <button type="submit" class="btn btn-net btn-sm">Save Hero</button>
+          <div class="admin-status-msg" data-status-for="netHeroForm"></div>
+        </form>
+      </div>
+
+      <!-- Network: Live Stream -->
+      <div class="admin-panel network-panel">
+        <h2>Live TV Settings <span id="netLiveBadgePreview" class="badge-mini offline">OFFLINE</span></h2>
+        <form id="netLiveForm">
+          <div class="toggle-row">
+            <label for="netLiveStatus" style="font-size:.85rem;">Status</label>
+            <select id="netLiveStatus" name="status" style="background:rgba(255,255,255,.05);color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:8px 10px;">
+              <option value="offline">Offline</option>
+              <option value="live">Live</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="netLiveTitle">Stream Title</label>
+            <input type="text" id="netLiveTitle" name="streamTitle">
+          </div>
+          <div class="form-row">
+            <label for="netLiveYoutube">YouTube Link <span style="font-weight:400;opacity:.6;">(priority #1)</span></label>
+            <input type="text" id="netLiveYoutube" name="youtubeLink" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+          <div class="form-row">
+            <label for="netLiveM3u8">m3u8 Stream URL <span style="font-weight:400;opacity:.6;">(priority #2)</span></label>
+            <input type="text" id="netLiveM3u8" name="m3u8Url" placeholder="https://.../playlist.m3u8">
+          </div>
+          <div class="form-row">
+            <label for="netLiveOffline">Offline Background Video URL</label>
+            <input type="text" id="netLiveOffline" name="offlineVideoUrl">
+          </div>
+          <button type="submit" class="btn btn-net btn-sm">Save Live Settings</button>
+          <div class="admin-status-msg" data-status-for="netLiveForm"></div>
+        </form>
+      </div>
+
+      <!-- Network: Programs -->
+      <div class="admin-panel network-panel" style="grid-column: 1 / -1;">
+        <h2>Programs</h2>
+        <p style="color:rgba(255,255,255,.65);font-size:.85rem;margin-top:-6px;">
+          Shown in the "Trending Programs" strip and on the Programs page. A video URL (YouTube
+          embed link) makes the card open a preview player; otherwise the image is shown.
+        </p>
+        <div id="netProgramsList"></div>
+        <form id="netProgramAddForm" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+          <input type="text" name="title" placeholder="Program title" required style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="tag" placeholder="Tag (e.g. NOW, Daily)" style="flex:1;min-width:120px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="description" placeholder="Description" style="flex:2;min-width:200px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="imageUrl" placeholder="Image URL" style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="videoUrl" placeholder="YouTube embed URL (optional)" style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <button type="submit" class="btn btn-net btn-sm">Add Program</button>
+        </form>
+        <div class="admin-status-msg" data-status-for="netProgramAddForm"></div>
+      </div>
+
+      <!-- Network: Socials -->
+      <div class="admin-panel network-panel">
+        <h2>Social Links</h2>
+        <form id="netSocialsForm">
+          <div class="form-row">
+            <label for="netSocialYoutube">YouTube</label>
+            <input type="text" id="netSocialYoutube" name="youtube">
+          </div>
+          <div class="form-row">
+            <label for="netSocialKingschat">KingsChat</label>
+            <input type="text" id="netSocialKingschat" name="kingschat">
+          </div>
+          <div class="form-row">
+            <label for="netSocialTwitter">X / Twitter</label>
+            <input type="text" id="netSocialTwitter" name="twitter">
+          </div>
+          <button type="submit" class="btn btn-net btn-sm">Save Socials</button>
+          <div class="admin-status-msg" data-status-for="netSocialsForm"></div>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- ==================== MEDIABLAST SPECIALS ==================== -->
+    <div id="panels-specials" class="admin-grid" style="display:none;">
 
       <!-- Hero -->
       <div class="admin-panel">
@@ -136,6 +245,7 @@
   </div>
 </main>
 
+<script>window.MB_ADMIN_DEFAULT_SITE = 'specials';</script>
 <script src="../js/config.js"></script>
 <script src="../js/admin-dashboard.js"></script>
 </body>

@@ -4,6 +4,7 @@ import cors from 'cors';
 import { initDb } from './db.js';
 import { authRouter } from './routes/auth.js';
 import { contentRouter } from './routes/content.js';
+import { networkRouter } from './routes/network.js';
 
 const requiredEnv = ['JWT_SECRET', 'ADMIN_EMAIL', 'ADMIN_PASSWORD'];
 const missing = requiredEnv.filter((key) => !process.env[key]);
@@ -29,6 +30,7 @@ app.use(express.json());
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRouter);
 app.use('/api', contentRouter);
+app.use('/api', networkRouter);
 
 app.use((req, res) => res.status(404).json({ error: 'Not found.' }));
 
