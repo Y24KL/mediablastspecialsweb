@@ -813,3 +813,25 @@ section { position: relative; padding: 96px 0; }
   color: var(--white);
   box-shadow: 0 8px 24px rgba(0,168,232,.25);
 }
+
+/* ---------- Image upload button (wraps a hidden file input) ---------- */
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 600;
+  font-family: var(--font-display);
+  cursor: pointer;
+  background: transparent;
+  color: var(--white);
+  border: 1.5px solid rgba(255,255,255,.35);
+  transition: all .2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.upload-btn:hover { border-color: var(--gold-light); color: var(--gold-light); }
+.upload-btn.is-uploading { opacity: .6; pointer-events: none; }
+.upload-btn input[type="file"] { display: none; }

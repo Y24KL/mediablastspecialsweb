@@ -44,6 +44,51 @@
     setTimeout(function () { el.textContent = ''; el.className = 'admin-status-msg'; }, 3500);
   }
 
+  /* ---------------- Image upload ---------------- */
+  function uploadImage(file) {
+    var formData = new FormData();
+    formData.append('image', file);
+    return apiFetch('/api/admin/upload', { method: 'POST', body: formData }).then(function (data) {
+      return data.url;
+    });
+  }
+
+  // Wires a hidden <input type="file"> (inside a .upload-btn label) so
+  // picking a file uploads it and fills the given text input with the URL.
+  function wireUpload(fileInput, targetInput, statusFormId) {
+    var label = fileInput.closest('.upload-btn');
+    fileInput.addEventListener('change', function () {
+      var file = fileInput.files[0];
+      if (!file) return;
+      if (label) label.classList.add('is-uploading');
+      uploadImage(file)
+        .then(function (url) {
+          targetInput.value = url;
+          if (statusFormId) showStatus(statusFormId, 'Image uploaded.');
+        })
+        .catch(function (err) {
+          if (statusFormId) showStatus(statusFormId, err.message || 'Upload failed.', true);
+          else alert(err.message || 'Upload failed.');
+        })
+        .finally(function () {
+          if (label) label.classList.remove('is-uploading');
+          fileInput.value = '';
+        });
+    });
+  }
+
+  // Wire the static "add" forms' upload buttons (data-target points at the
+  // paired text input's id). Dynamically-rendered rows wire themselves
+  // directly since they hold a live reference to their own input.
+  document.querySelectorAll('.upload-btn[data-target]').forEach(function (label) {
+    var fileInput = label.querySelector('input[type="file"]');
+    var targetInput = document.getElementById(label.dataset.target);
+    if (fileInput && targetInput) {
+      var form = label.closest('form');
+      wireUpload(fileInput, targetInput, form && form.id);
+    }
+  });
+
   /* ---------------- Verify session + load current user ---------------- */
   apiFetch('/api/auth/me')
     .then(function (data) {
@@ -164,6 +209,15 @@
       urlInput.value = item.imageUrl || '';
       urlInput.placeholder = 'Image URL';
 
+      var uploadLabel = document.createElement('label');
+      uploadLabel.className = 'upload-btn';
+      uploadLabel.textContent = 'Upload Image';
+      var uploadInput = document.createElement('input');
+      uploadInput.type = 'file';
+      uploadInput.accept = 'image/*';
+      uploadLabel.appendChild(uploadInput);
+      wireUpload(uploadInput, urlInput, 'galleryAddForm');
+
       var videoInput = document.createElement('input');
       videoInput.type = 'text';
       videoInput.value = item.videoId || '';
@@ -201,6 +255,7 @@
 
       row.appendChild(titleInput);
       row.appendChild(urlInput);
+      row.appendChild(uploadLabel);
       row.appendChild(videoInput);
       row.appendChild(driveInput);
       row.appendChild(saveBtn);
@@ -373,6 +428,15 @@
       imageInput.value = item.imageUrl || '';
       imageInput.placeholder = 'Image URL';
 
+      var uploadLabel = document.createElement('label');
+      uploadLabel.className = 'upload-btn';
+      uploadLabel.textContent = 'Upload Image';
+      var uploadInput = document.createElement('input');
+      uploadInput.type = 'file';
+      uploadInput.accept = 'image/*';
+      uploadLabel.appendChild(uploadInput);
+      wireUpload(uploadInput, imageInput, 'netProgramAddForm');
+
       var videoInput = document.createElement('input');
       videoInput.type = 'text';
       videoInput.value = item.videoUrl || '';
@@ -407,6 +471,7 @@
       row.appendChild(tagInput);
       row.appendChild(descInput);
       row.appendChild(imageInput);
+      row.appendChild(uploadLabel);
       row.appendChild(videoInput);
       row.appendChild(saveBtn);
       row.appendChild(deleteBtn);
