@@ -56,7 +56,9 @@
         var doubled = items.concat(items); // seamless loop
         track.innerHTML = doubled.map(function (item) {
           var bg = item.imageUrl ? 'background-image:url(\'' + item.imageUrl + '\');' : '';
-          return '<div class="gallery-card" style="' + bg + (item.imageUrl ? '' : 'background:linear-gradient(135deg, var(--royal-blue), var(--navy));') + '">' +
+          var playable = item.videoId ? ' is-playable' : '';
+          var videoAttr = item.videoId ? ' data-video-id="' + escapeHtml(item.videoId) + '"' : '';
+          return '<div class="gallery-card' + playable + '"' + videoAttr + ' style="' + bg + (item.imageUrl ? '' : 'background:linear-gradient(135deg, var(--royal-blue), var(--navy));') + '">' +
             '<span>' + escapeHtml(item.title || '') + '</span></div>';
         }).join('');
       }
@@ -175,5 +177,36 @@
       });
     });
     form.addEventListener('submit', function () { form.dataset.touched = '1'; });
+  }
+
+  /* ---------------- Episode video modal ---------------- */
+  var videoModal = document.getElementById('videoModal');
+  if (videoModal) {
+    var videoModalIframe = document.getElementById('videoModalIframe');
+
+    var openVideoModal = function (videoId) {
+      if (!videoId) return;
+      videoModalIframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0';
+      videoModal.classList.add('open');
+      videoModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+
+    var closeVideoModal = function () {
+      videoModal.classList.remove('open');
+      videoModal.setAttribute('aria-hidden', 'true');
+      videoModalIframe.src = '';
+      document.body.style.overflow = '';
+    };
+
+    document.addEventListener('click', function (e) {
+      var card = e.target.closest('.gallery-card.is-playable[data-video-id]');
+      if (card) { openVideoModal(card.getAttribute('data-video-id')); return; }
+      if (e.target.closest('[data-close-modal]') || e.target.id === 'videoModalClose') closeVideoModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && videoModal.classList.contains('open')) closeVideoModal();
+    });
   }
 })();

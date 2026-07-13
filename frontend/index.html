@@ -103,19 +103,19 @@
     <div class="carousel-track-wrap reveal">
       <div class="carousel-track" id="carouselTrack">
         <!-- Default placeholder items; replaced dynamically from the admin-managed content API when configured -->
-        <div class="gallery-card" style="background:linear-gradient(135deg,#123A8C,#0A2559);"><span>Season Premiere</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#29B6F6,#0D47A1);"><span>Live Episode Coverage</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#9A6E2B,#0A2559);"><span>Special Guest Episode</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#123A8C,#29B6F6);"><span>Behind the Scenes</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#0D47A1,#0A2559);"><span>Studio Broadcast</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#E8C873,#9A6E2B);"><span>Season Highlight Reel</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#123A8C,#0A2559);"><span>Season Premiere</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#29B6F6,#0D47A1);"><span>Live Episode Coverage</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#9A6E2B,#0A2559);"><span>Special Guest Episode</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#123A8C,#29B6F6);"><span>Behind the Scenes</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#0D47A1,#0A2559);"><span>Studio Broadcast</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#E8C873,#9A6E2B);"><span>Season Highlight Reel</span></div>
         <!-- duplicate set for seamless infinite scroll -->
-        <div class="gallery-card" style="background:linear-gradient(135deg,#123A8C,#0A2559);"><span>Season Premiere</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#29B6F6,#0D47A1);"><span>Live Episode Coverage</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#9A6E2B,#0A2559);"><span>Special Guest Episode</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#123A8C,#29B6F6);"><span>Behind the Scenes</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#0D47A1,#0A2559);"><span>Studio Broadcast</span></div>
-        <div class="gallery-card" style="background:linear-gradient(135deg,#E8C873,#9A6E2B);"><span>Season Highlight Reel</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#123A8C,#0A2559);"><span>Season Premiere</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#29B6F6,#0D47A1);"><span>Live Episode Coverage</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#9A6E2B,#0A2559);"><span>Special Guest Episode</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#123A8C,#29B6F6);"><span>Behind the Scenes</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#0D47A1,#0A2559);"><span>Studio Broadcast</span></div>
+        <div class="gallery-card is-playable" data-video-id="jfKfPfyJRdk" style="background:linear-gradient(135deg,#E8C873,#9A6E2B);"><span>Season Highlight Reel</span></div>
       </div>
     </div>
   </section>
@@ -172,6 +172,16 @@
   </section>
 
 </main>
+
+<div class="video-modal" id="videoModal" aria-hidden="true">
+  <div class="video-modal-backdrop" data-close-modal></div>
+  <div class="video-modal-inner">
+    <button type="button" class="video-modal-close" id="videoModalClose" aria-label="Close video">&times;</button>
+    <div class="video-modal-frame">
+      <iframe id="videoModalIframe" src="" title="Episode player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
 
 <footer class="site-footer">
   <div class="container footer-inner">

@@ -161,6 +161,11 @@
       urlInput.value = item.imageUrl || '';
       urlInput.placeholder = 'Image URL';
 
+      var videoInput = document.createElement('input');
+      videoInput.type = 'text';
+      videoInput.value = item.videoId || '';
+      videoInput.placeholder = 'YouTube Video ID';
+
       var saveBtn = document.createElement('button');
       saveBtn.type = 'button';
       saveBtn.className = 'btn btn-outline btn-sm';
@@ -169,9 +174,9 @@
         apiFetch('/api/admin/gallery/' + item.id, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: titleInput.value, imageUrl: urlInput.value }),
+          body: JSON.stringify({ title: titleInput.value, imageUrl: urlInput.value, videoId: videoInput.value }),
         })
-          .then(function () { showStatus('galleryAddForm', 'Gallery item updated.'); })
+          .then(function () { showStatus('galleryAddForm', 'Episode updated.'); })
           .catch(function (err) { showStatus('galleryAddForm', err.message, true); });
       });
 
@@ -182,12 +187,13 @@
       deleteBtn.addEventListener('click', function () {
         if (!confirm('Delete "' + item.title + '"?')) return;
         apiFetch('/api/admin/gallery/' + item.id, { method: 'DELETE' })
-          .then(function () { row.remove(); showStatus('galleryAddForm', 'Gallery item deleted.'); })
+          .then(function () { row.remove(); showStatus('galleryAddForm', 'Episode deleted.'); })
           .catch(function (err) { showStatus('galleryAddForm', err.message, true); });
       });
 
       row.appendChild(titleInput);
       row.appendChild(urlInput);
+      row.appendChild(videoInput);
       row.appendChild(saveBtn);
       row.appendChild(deleteBtn);
       list.appendChild(row);
@@ -197,11 +203,11 @@
   document.getElementById('galleryAddForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var form = e.target;
-    var payload = { title: form.title.value, imageUrl: form.imageUrl.value };
+    var payload = { title: form.title.value, imageUrl: form.imageUrl.value, videoId: form.videoId.value };
     apiFetch('/api/admin/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then(function () {
         form.reset();
-        showStatus('galleryAddForm', 'Gallery item added.');
+        showStatus('galleryAddForm', 'Episode added.');
         return loadContent();
       })
       .catch(function (err) { showStatus('galleryAddForm', err.message, true); });
