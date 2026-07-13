@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — MediaBlast Specials</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin-body">
+
+<div class="admin-login-wrap">
+  <div class="admin-card">
+    <div class="mark"></div>
+    <h1 class="section-heading" style="text-align:center;font-size:1.5rem;">Admin Portal</h1>
+    <p class="section-sub" style="text-align:center;margin:0 0 1.6rem;font-size:.9rem;">Sign in to manage MediaBlast Specials content.</p>
+
+    <form id="loginForm" novalidate>
+      <div class="form-row">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="username">
+      </div>
+      <div class="form-row">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-gold" style="width:100%;">Sign In</button>
+      <div class="form-status" id="loginStatus"></div>
+    </form>
+  </div>
+</div>
+
+<script src="../js/config.js"></script>
+<script src="../js/admin-login.js"></script>
+</body>
+</html>
