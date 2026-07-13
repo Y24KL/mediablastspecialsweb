@@ -66,6 +66,11 @@ const defaultData = {
       kingschat: 'https://kingschat.online/user/mediablastnetwork',
       twitter: 'https://x.com/mediablastnet',
     },
+    news: [
+      { id: 1, title: 'Future of 8K Streaming', category: 'tech', imageUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800', body: 'Latest insights from our digital newsroom.', publishedAt: '2026-01-01T00:00:00.000Z' },
+      { id: 2, title: 'Unfiltered News: Middle East', category: 'media', imageUrl: 'https://images.unsplash.com/photo-1504711432869-5d592f239cff?auto=format&fit=crop&q=80&w=800', body: 'Latest insights from our digital newsroom.', publishedAt: '2026-01-02T00:00:00.000Z' },
+      { id: 3, title: 'Mediablast Originals: 2026', category: 'media', imageUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&q=80&w=800', body: 'Latest insights from our digital newsroom.', publishedAt: '2026-01-03T00:00:00.000Z' },
+    ],
   },
 };
 
@@ -76,10 +81,12 @@ export async function initDb() {
   await db.read();
   db.data ||= structuredClone(defaultData);
 
-  // Backfill the `network` namespace for databases written before it existed
-  // (a fresh clone gets it from defaultData above, but a live db.json on
-  // Render predates this key and won't have it merged in automatically).
+  // Backfill the `network` namespace (and any keys added to it later, like
+  // `news`) for databases written before they existed — a fresh clone gets
+  // them from defaultData above, but a live db.json on Render predates them
+  // and won't have them merged in automatically.
   db.data.network ||= structuredClone(defaultData.network);
+  db.data.network.news ||= structuredClone(defaultData.network.news);
 
   // Seed / sync the admin account from env on every boot so credential
   // rotation via env vars (e.g. on Render) takes effect without manual steps.

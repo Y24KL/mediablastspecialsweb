@@ -740,6 +740,17 @@ section { position: relative; padding: 96px 0; }
 }
 .gallery-item-row input { flex: 1; min-width: 120px; }
 .gallery-item-row button { flex-shrink: 0; }
+.gallery-item-row textarea {
+  flex-basis: 100%;
+  min-height: 80px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #fff;
+  font-family: inherit;
+  resize: vertical;
+}
 
 .btn-sm { padding: 8px 16px; font-size: .85rem; }
 .btn-danger { background: rgba(220,38,38,.18); color: #ff9a9a; border: 1px solid rgba(255,92,92,.4); }

@@ -7,8 +7,8 @@ export const networkRouter = Router();
 /* ---------------- Public ---------------- */
 
 networkRouter.get('/network/content', (req, res) => {
-  const { hero, live, programs, socials } = db.data.network;
-  res.json({ hero, live, programs, socials });
+  const { hero, live, programs, socials, news } = db.data.network;
+  res.json({ hero, live, programs, socials, news });
 });
 
 /* ---------------- Admin: hero ---------------- */
@@ -99,6 +99,56 @@ networkRouter.delete('/admin/network/programs/:id', requireAuth, async (req, res
   db.data.network.programs = db.data.network.programs.filter((p) => p.id !== id);
   if (db.data.network.programs.length === before) {
     return res.status(404).json({ error: 'Program not found.' });
+  }
+  await db.write();
+  res.status(204).end();
+});
+
+/* ---------------- Admin: news/articles CRUD ---------------- */
+
+networkRouter.get('/admin/network/news', requireAuth, (req, res) => {
+  res.json(db.data.network.news);
+});
+
+networkRouter.post('/admin/network/news', requireAuth, async (req, res) => {
+  const { title, body, category, imageUrl } = req.body || {};
+  if (!title) return res.status(400).json({ error: 'title is required.' });
+  if (!body) return res.status(400).json({ error: 'body is required.' });
+
+  const nextId = db.data.network.news.reduce((max, item) => Math.max(max, item.id), 0) + 1;
+  const item = {
+    id: nextId,
+    title: String(title),
+    body: String(body),
+    category: category ? String(category) : 'general',
+    imageUrl: imageUrl ? String(imageUrl) : '',
+    publishedAt: new Date().toISOString(),
+  };
+  db.data.network.news.unshift(item);
+  await db.write();
+  res.status(201).json(item);
+});
+
+networkRouter.put('/admin/network/news/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  const item = db.data.network.news.find((n) => n.id === id);
+  if (!item) return res.status(404).json({ error: 'Article not found.' });
+
+  const { title, body, category, imageUrl } = req.body || {};
+  if (title !== undefined) item.title = String(title);
+  if (body !== undefined) item.body = String(body);
+  if (category !== undefined) item.category = String(category);
+  if (imageUrl !== undefined) item.imageUrl = String(imageUrl);
+  await db.write();
+  res.json(item);
+});
+
+networkRouter.delete('/admin/network/news/:id', requireAuth, async (req, res) => {
+  const id = Number(req.params.id);
+  const before = db.data.network.news.length;
+  db.data.network.news = db.data.network.news.filter((n) => n.id !== id);
+  if (db.data.network.news.length === before) {
+    return res.status(404).json({ error: 'Article not found.' });
   }
   await db.write();
   res.status(204).end();

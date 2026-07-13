@@ -322,6 +322,7 @@
         setVal('netSocialTwitter', content.socials.twitter);
       }
       renderPrograms(content.programs || []);
+      renderNews(content.news || []);
     });
   }
 
@@ -492,6 +493,95 @@
           return loadNetworkContent();
         })
         .catch(function (err) { showStatus('netProgramAddForm', err.message, true); });
+    });
+  }
+
+  function renderNews(items) {
+    var list = document.getElementById('netNewsList');
+    if (!list) return;
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 'gallery-item-row';
+
+      var titleInput = document.createElement('input');
+      titleInput.type = 'text';
+      titleInput.value = item.title;
+      titleInput.placeholder = 'Title';
+
+      var categoryInput = document.createElement('input');
+      categoryInput.type = 'text';
+      categoryInput.value = item.category || '';
+      categoryInput.placeholder = 'Category';
+
+      var imageInput = document.createElement('input');
+      imageInput.type = 'text';
+      imageInput.value = item.imageUrl || '';
+      imageInput.placeholder = 'Image URL';
+
+      var uploadLabel = document.createElement('label');
+      uploadLabel.className = 'upload-btn';
+      uploadLabel.textContent = 'Upload Image';
+      var uploadInput = document.createElement('input');
+      uploadInput.type = 'file';
+      uploadInput.accept = 'image/*';
+      uploadLabel.appendChild(uploadInput);
+      wireUpload(uploadInput, imageInput, 'netNewsAddForm');
+
+      var bodyInput = document.createElement('textarea');
+      bodyInput.value = item.body || '';
+      bodyInput.placeholder = 'Article body';
+      bodyInput.rows = 4;
+
+      var saveBtn = document.createElement('button');
+      saveBtn.type = 'button';
+      saveBtn.className = 'btn btn-outline btn-sm';
+      saveBtn.textContent = 'Save';
+      saveBtn.addEventListener('click', function () {
+        apiFetch('/api/admin/network/news/' + item.id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: titleInput.value, category: categoryInput.value, imageUrl: imageInput.value, body: bodyInput.value }),
+        })
+          .then(function () { showStatus('netNewsAddForm', 'Article updated.'); })
+          .catch(function (err) { showStatus('netNewsAddForm', err.message, true); });
+      });
+
+      var deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'btn btn-danger btn-sm';
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', function () {
+        if (!confirm('Delete "' + item.title + '"?')) return;
+        apiFetch('/api/admin/network/news/' + item.id, { method: 'DELETE' })
+          .then(function () { row.remove(); showStatus('netNewsAddForm', 'Article deleted.'); })
+          .catch(function (err) { showStatus('netNewsAddForm', err.message, true); });
+      });
+
+      row.appendChild(titleInput);
+      row.appendChild(categoryInput);
+      row.appendChild(imageInput);
+      row.appendChild(uploadLabel);
+      row.appendChild(bodyInput);
+      row.appendChild(saveBtn);
+      row.appendChild(deleteBtn);
+      list.appendChild(row);
+    });
+  }
+
+  var netNewsAddForm = document.getElementById('netNewsAddForm');
+  if (netNewsAddForm) {
+    netNewsAddForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = e.target;
+      var payload = { title: form.title.value, category: form.category.value, imageUrl: form.imageUrl.value, body: form.body.value };
+      apiFetch('/api/admin/network/news', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function () {
+          form.reset();
+          showStatus('netNewsAddForm', 'Article published.');
+          return loadNetworkContent();
+        })
+        .catch(function (err) { showStatus('netNewsAddForm', err.message, true); });
     });
   }
 })();

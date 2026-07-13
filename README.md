@@ -75,12 +75,14 @@ plaintext.
 | GET/POST | `/api/admin/gallery` | Bearer | List / add gallery items |
 | PUT/DELETE | `/api/admin/gallery/:id` | Bearer | Update / remove a gallery item |
 | PUT | `/api/admin/socials` | Bearer | Update social links |
-| GET | `/api/network/content` | — | Public: MediaBlast Network's hero, live, programs, socials |
+| GET | `/api/network/content` | — | Public: MediaBlast Network's hero, live, programs, socials, news |
 | PUT | `/api/admin/network/hero` | Bearer | Update Network hero title/tagline/CTA |
 | PUT | `/api/admin/network/live` | Bearer | Update Network live-stream status/YouTube link/m3u8 URL/offline video/title |
 | GET/POST | `/api/admin/network/programs` | Bearer | List / add Network programs |
 | PUT/DELETE | `/api/admin/network/programs/:id` | Bearer | Update / remove a Network program |
 | PUT | `/api/admin/network/socials` | Bearer | Update Network social links |
+| GET/POST | `/api/admin/network/news` | Bearer | List / add News articles (new articles are prepended, newest first) |
+| PUT/DELETE | `/api/admin/network/news/:id` | Bearer | Update / remove a News article |
 | POST | `/api/admin/upload` | Bearer | Multipart form field `image` (jpg/png/webp/gif, max 5MB) → `{ url }`. Used by both dashboards' image-upload buttons; the returned URL is absolute since uploads are served from this backend, not the frontend hosts. |
 
 This one backend and one admin login manage **both** MediaBlast Specials

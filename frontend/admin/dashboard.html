@@ -112,6 +112,24 @@
         <div class="admin-status-msg" data-status-for="netProgramAddForm"></div>
       </div>
 
+      <!-- Network: News -->
+      <div class="admin-panel network-panel" style="grid-column: 1 / -1;">
+        <h2>News / Articles</h2>
+        <p style="color:rgba(255,255,255,.65);font-size:.85rem;margin-top:-6px;">
+          Shown on the News page. Leave a blank line between paragraphs in the body.
+        </p>
+        <div id="netNewsList"></div>
+        <form id="netNewsAddForm" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+          <input type="text" name="title" placeholder="Article title" required style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="category" placeholder="Category (e.g. tech, media)" style="flex:1;min-width:140px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" id="netNewsAddImageUrl" name="imageUrl" placeholder="Image URL" style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <label class="upload-btn" data-target="netNewsAddImageUrl">Upload Image<input type="file" accept="image/*"></label>
+          <textarea name="body" placeholder="Article body" required rows="4" style="flex-basis:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;font-family:inherit;resize:vertical;"></textarea>
+          <button type="submit" class="btn btn-net btn-sm">Publish Article</button>
+        </form>
+        <div class="admin-status-msg" data-status-for="netNewsAddForm"></div>
+      </div>
+
       <!-- Network: Socials -->
       <div class="admin-panel network-panel">
         <h2>Social Links</h2>
