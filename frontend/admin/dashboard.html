@@ -79,12 +79,16 @@
 
       <!-- Gallery -->
       <div class="admin-panel" style="grid-column: 1 / -1;">
-        <h2>Gallery / Showcase</h2>
+        <h2>Episodes / Showcase</h2>
+        <p style="color:rgba(255,255,255,.65);font-size:.85rem;margin-top:-6px;">
+          Add a YouTube Video ID to make a card playable — visitors click it to watch that clip in a popup player.
+        </p>
         <div id="galleryList"></div>
         <form id="galleryAddForm" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
-          <input type="text" name="title" placeholder="Item title" required style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
-          <input type="text" name="imageUrl" placeholder="Image URL (optional)" style="flex:2;min-width:200px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
-          <button type="submit" class="btn btn-gold btn-sm">Add Item</button>
+          <input type="text" name="title" placeholder="Episode title" required style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="imageUrl" placeholder="Image URL (optional)" style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="videoId" placeholder="YouTube Video ID (optional)" style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <button type="submit" class="btn btn-gold btn-sm">Add Episode</button>
         </form>
         <div class="admin-status-msg" data-status-for="galleryAddForm"></div>
       </div>
