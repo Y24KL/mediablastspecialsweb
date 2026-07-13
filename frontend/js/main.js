@@ -56,9 +56,10 @@
         var doubled = items.concat(items); // seamless loop
         track.innerHTML = doubled.map(function (item) {
           var bg = item.imageUrl ? 'background-image:url(\'' + item.imageUrl + '\');' : '';
-          var playable = item.videoId ? ' is-playable' : '';
+          var playable = (item.videoId || item.driveFileId) ? ' is-playable' : '';
           var videoAttr = item.videoId ? ' data-video-id="' + escapeHtml(item.videoId) + '"' : '';
-          return '<div class="gallery-card' + playable + '"' + videoAttr + ' style="' + bg + (item.imageUrl ? '' : 'background:linear-gradient(135deg, var(--royal-blue), var(--navy));') + '">' +
+          var driveAttr = item.driveFileId ? ' data-drive-id="' + escapeHtml(item.driveFileId) + '"' : '';
+          return '<div class="gallery-card' + playable + '"' + videoAttr + driveAttr + ' style="' + bg + (item.imageUrl ? '' : 'background:linear-gradient(135deg, var(--royal-blue), var(--navy));') + '">' +
             '<span>' + escapeHtml(item.title || '') + '</span></div>';
         }).join('');
       }
@@ -184,9 +185,18 @@
   if (videoModal) {
     var videoModalIframe = document.getElementById('videoModalIframe');
 
-    var openVideoModal = function (videoId) {
-      if (!videoId) return;
-      videoModalIframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0';
+    var openVideoModal = function (videoId, driveFileId) {
+      var src = '';
+      if (videoId) {
+        src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0';
+      } else if (driveFileId) {
+        // Google Drive's preview embed doesn't support a reliable autoplay
+        // param, so the viewer presses play themselves inside the player.
+        src = 'https://drive.google.com/file/d/' + encodeURIComponent(driveFileId) + '/preview';
+      } else {
+        return;
+      }
+      videoModalIframe.src = src;
       videoModal.classList.add('open');
       videoModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -200,8 +210,11 @@
     };
 
     document.addEventListener('click', function (e) {
-      var card = e.target.closest('.gallery-card.is-playable[data-video-id]');
-      if (card) { openVideoModal(card.getAttribute('data-video-id')); return; }
+      var card = e.target.closest('.gallery-card.is-playable');
+      if (card) {
+        openVideoModal(card.getAttribute('data-video-id'), card.getAttribute('data-drive-id'));
+        return;
+      }
       if (e.target.closest('[data-close-modal]') || e.target.id === 'videoModalClose') closeVideoModal();
     });
 

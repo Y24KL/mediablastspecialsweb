@@ -169,6 +169,11 @@
       videoInput.value = item.videoId || '';
       videoInput.placeholder = 'YouTube Video ID';
 
+      var driveInput = document.createElement('input');
+      driveInput.type = 'text';
+      driveInput.value = item.driveFileId || '';
+      driveInput.placeholder = 'Google Drive File ID';
+
       var saveBtn = document.createElement('button');
       saveBtn.type = 'button';
       saveBtn.className = 'btn btn-outline btn-sm';
@@ -177,7 +182,7 @@
         apiFetch('/api/admin/gallery/' + item.id, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: titleInput.value, imageUrl: urlInput.value, videoId: videoInput.value }),
+          body: JSON.stringify({ title: titleInput.value, imageUrl: urlInput.value, videoId: videoInput.value, driveFileId: driveInput.value }),
         })
           .then(function () { showStatus('galleryAddForm', 'Episode updated.'); })
           .catch(function (err) { showStatus('galleryAddForm', err.message, true); });
@@ -197,6 +202,7 @@
       row.appendChild(titleInput);
       row.appendChild(urlInput);
       row.appendChild(videoInput);
+      row.appendChild(driveInput);
       row.appendChild(saveBtn);
       row.appendChild(deleteBtn);
       list.appendChild(row);
@@ -206,7 +212,7 @@
   document.getElementById('galleryAddForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var form = e.target;
-    var payload = { title: form.title.value, imageUrl: form.imageUrl.value, videoId: form.videoId.value };
+    var payload = { title: form.title.value, imageUrl: form.imageUrl.value, videoId: form.videoId.value, driveFileId: form.driveFileId.value };
     apiFetch('/api/admin/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
       .then(function () {
         form.reset();

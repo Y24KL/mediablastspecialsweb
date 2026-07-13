@@ -59,7 +59,7 @@ contentRouter.get('/admin/gallery', requireAuth, (req, res) => {
 });
 
 contentRouter.post('/admin/gallery', requireAuth, async (req, res) => {
-  const { title, imageUrl, videoId } = req.body || {};
+  const { title, imageUrl, videoId, driveFileId } = req.body || {};
   if (!title) return res.status(400).json({ error: 'title is required.' });
 
   const nextId = db.data.gallery.reduce((max, item) => Math.max(max, item.id), 0) + 1;
@@ -68,6 +68,7 @@ contentRouter.post('/admin/gallery', requireAuth, async (req, res) => {
     title: String(title),
     imageUrl: imageUrl ? String(imageUrl) : '',
     videoId: videoId ? String(videoId) : '',
+    driveFileId: driveFileId ? String(driveFileId) : '',
   };
   db.data.gallery.push(item);
   await db.write();
@@ -79,10 +80,11 @@ contentRouter.put('/admin/gallery/:id', requireAuth, async (req, res) => {
   const item = db.data.gallery.find((g) => g.id === id);
   if (!item) return res.status(404).json({ error: 'Gallery item not found.' });
 
-  const { title, imageUrl, videoId } = req.body || {};
+  const { title, imageUrl, videoId, driveFileId } = req.body || {};
   if (title !== undefined) item.title = String(title);
   if (imageUrl !== undefined) item.imageUrl = String(imageUrl);
   if (videoId !== undefined) item.videoId = String(videoId);
+  if (driveFileId !== undefined) item.driveFileId = String(driveFileId);
   await db.write();
   res.json(item);
 });
