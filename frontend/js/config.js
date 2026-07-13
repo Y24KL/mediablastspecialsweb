@@ -6,6 +6,6 @@
  */
 window.MB_CONFIG = {
   API_BASE: 'https://mediablastspecialsbackend.onrender.com', // e.g. 'https://mediablast-backend.onrender.com'
-  FORMSPREE_FORM_ID: 'https://formspree.io/f/mykryjzp', // replace before deployment, see README
+  FORMSPREE_FORM_ID: 'mykryjzp', // just the ID, not the full URL — main.js builds the URL
   YOUTUBE_CHANNEL_URL: 'https://www.youtube.com/@mediablastnetwork',
 };
