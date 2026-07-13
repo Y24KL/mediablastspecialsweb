@@ -16,9 +16,9 @@ fs.mkdirSync(dataDir, { recursive: true });
 const defaultData = {
   admin: null, // { email, passwordHash }
   hero: {
-    tagline: 'Broadcast-grade production, live streaming, and standout media specials — engineered to put your brand center stage.',
-    ctaText: 'Get a Quote',
-    ctaLink: '#contact',
+    tagline: 'A television special bringing you engaging episodes and live broadcasts — streamed for viewers everywhere.',
+    ctaText: 'Watch Live',
+    ctaLink: 'watch-live.html',
   },
   live: {
     videoId: 'jfKfPfyJRdk',
@@ -27,11 +27,11 @@ const defaultData = {
     channelUrl: process.env.DEFAULT_CHANNEL_URL || 'https://www.youtube.com/@mediablastspecials',
   },
   gallery: [
-    { id: 1, title: 'Studio Broadcast Set', imageUrl: '' },
-    { id: 2, title: 'Live Event Coverage', imageUrl: '' },
-    { id: 3, title: 'Brand Promo Special', imageUrl: '' },
-    { id: 4, title: 'Multi-Cam Production', imageUrl: '' },
-    { id: 5, title: 'Post-Production Suite', imageUrl: '' },
+    { id: 1, title: 'Season Premiere', imageUrl: '' },
+    { id: 2, title: 'Live Episode Coverage', imageUrl: '' },
+    { id: 3, title: 'Special Guest Episode', imageUrl: '' },
+    { id: 4, title: 'Behind the Scenes', imageUrl: '' },
+    { id: 5, title: 'Studio Broadcast', imageUrl: '' },
     { id: 6, title: 'Season Highlight Reel', imageUrl: '' },
   ],
   socials: {
