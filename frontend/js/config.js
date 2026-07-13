@@ -5,7 +5,7 @@
  * Leave as '' when frontend and backend are served from the same origin.
  */
 window.MB_CONFIG = {
-  API_BASE: '', // e.g. 'https://mediablast-backend.onrender.com'
-  FORMSPREE_FORM_ID: 'YOUR_FORM_ID', // replace before deployment, see README
-  YOUTUBE_CHANNEL_URL: 'https://www.youtube.com/@mediablastspecials',
+  API_BASE: 'https://mediablastspecialsbackend.onrender.com', // e.g. 'https://mediablast-backend.onrender.com'
+  FORMSPREE_FORM_ID: 'https://formspree.io/f/mykryjzp', // replace before deployment, see README
+  YOUTUBE_CHANNEL_URL: 'https://www.youtube.com/@mediablastnetwork',
 };
