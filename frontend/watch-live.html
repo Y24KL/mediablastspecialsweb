@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Live — MediaBlast Specials</title>
+<meta name="description" content="Watch MediaBlast Specials live on YouTube. Live status updates automatically.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <a href="index.html" class="nav-brand">
+      <span class="mark"></span>
+      MediaBlast <span class="text-gradient-gold">Specials</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html#about">Specials</a></li>
+      <li><a href="index.html#gallery">Showcase</a></li>
+      <li><a href="watch-live.html">Watch Live</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="live-page-hero">
+    <div class="container">
+      <span id="statusBadge" class="live-status-badge is-offline">OFFLINE</span>
+      <h1 class="section-heading">Watch <span class="text-gradient-gold">Live</span></h1>
+      <p class="section-sub" style="margin-left:auto;margin-right:auto;">
+        Tune in for live broadcasts, event coverage, and MediaBlast specials — streamed straight from our YouTube channel.
+      </p>
+    </div>
+  </section>
+
+  <section style="padding-top:0;">
+    <div class="container">
+      <div class="player-frame" id="playerFrame" style="display:none;">
+        <div id="yt-player"></div>
+        <button id="fullscreenBtn" class="fullscreen-btn" aria-label="Fullscreen">&#9974; Fullscreen</button>
+      </div>
+
+      <div class="offline-panel" id="offlinePanel">
+        <span class="section-label">Next Stream</span>
+        <div class="countdown" id="countdown">Loading…</div>
+        <p style="color:rgba(255,255,255,.7);margin:0;">We're currently offline. Check back soon or catch up on past broadcasts.</p>
+      </div>
+
+      <div class="live-actions">
+        <a id="joinConversationBtn" href="#" target="_blank" rel="noopener" class="btn btn-gold">Join the Conversation</a>
+        <a href="index.html#contact" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="mark"></span>
+      MediaBlast Specials
+    </div>
+    <div class="social-links">
+      <a href="https://www.youtube.com/@mediablastspecials" target="_blank" rel="noopener" data-social="youtube" aria-label="YouTube">YT</a>
+      <a href="#" target="_blank" rel="noopener" data-social="instagram" aria-label="Instagram">IG</a>
+      <a href="#" target="_blank" rel="noopener" data-social="facebook" aria-label="Facebook">FB</a>
+      <a href="#" target="_blank" rel="noopener" data-social="twitter" aria-label="X / Twitter">X</a>
+    </div>
+    <p class="copyright">&copy; <span id="year"></span> MediaBlast Specials. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/watch-live.js"></script>
+</body>
+</html>

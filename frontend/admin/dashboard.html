@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — MediaBlast Specials</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin-body">
+
+<header class="admin-header">
+  <div class="container">
+    <div class="nav-brand">
+      <span class="mark"></span>
+      MediaBlast <span class="text-gradient-gold">Admin</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <span id="adminEmail" style="font-size:.85rem;opacity:.75;"></span>
+      <button id="logoutBtn" class="btn btn-outline btn-sm">Log Out</button>
+    </div>
+  </div>
+</header>
+
+<main class="admin-shell">
+  <div class="container">
+    <div class="admin-grid">
+
+      <!-- Hero -->
+      <div class="admin-panel">
+        <h2>Hero Tagline &amp; CTA</h2>
+        <form id="heroForm">
+          <div class="form-row">
+            <label for="heroTagline">Tagline</label>
+            <textarea id="heroTagline" name="tagline" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <label for="heroCtaText">CTA Button Text</label>
+            <input type="text" id="heroCtaText" name="ctaText">
+          </div>
+          <div class="form-row">
+            <label for="heroCtaLink">CTA Button Link</label>
+            <input type="text" id="heroCtaLink" name="ctaLink" placeholder="#contact">
+          </div>
+          <button type="submit" class="btn btn-gold btn-sm">Save Hero</button>
+          <div class="admin-status-msg" data-status-for="heroForm"></div>
+        </form>
+      </div>
+
+      <!-- Live Stream -->
+      <div class="admin-panel">
+        <h2>Watch Live Settings <span id="liveBadgePreview" class="badge-mini offline">OFFLINE</span></h2>
+        <form id="liveForm">
+          <div class="form-row">
+            <label for="liveVideoId">YouTube Video ID</label>
+            <input type="text" id="liveVideoId" name="videoId" placeholder="e.g. dQw4w9WgXcQ">
+          </div>
+          <div class="toggle-row">
+            <label for="liveStatus" style="font-size:.85rem;">Status</label>
+            <select id="liveStatus" name="status" style="background:rgba(255,255,255,.05);color:#fff;border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:8px 10px;">
+              <option value="offline">Offline</option>
+              <option value="live">Live</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="liveNext">Next Stream Date/Time</label>
+            <input type="datetime-local" id="liveNext" name="nextStreamAt">
+          </div>
+          <div class="form-row">
+            <label for="liveChannel">YouTube Channel URL</label>
+            <input type="text" id="liveChannel" name="channelUrl">
+          </div>
+          <button type="submit" class="btn btn-gold btn-sm">Save Live Settings</button>
+          <div class="admin-status-msg" data-status-for="liveForm"></div>
+        </form>
+      </div>
+
+      <!-- Gallery -->
+      <div class="admin-panel" style="grid-column: 1 / -1;">
+        <h2>Gallery / Showcase</h2>
+        <div id="galleryList"></div>
+        <form id="galleryAddForm" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+          <input type="text" name="title" placeholder="Item title" required style="flex:1;min-width:160px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <input type="text" name="imageUrl" placeholder="Image URL (optional)" style="flex:2;min-width:200px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:10px 12px;color:#fff;">
+          <button type="submit" class="btn btn-gold btn-sm">Add Item</button>
+        </form>
+        <div class="admin-status-msg" data-status-for="galleryAddForm"></div>
+      </div>
+
+      <!-- Socials -->
+      <div class="admin-panel">
+        <h2>Social Links</h2>
+        <form id="socialsForm">
+          <div class="form-row">
+            <label for="socialYoutube">YouTube</label>
+            <input type="text" id="socialYoutube" name="youtube">
+          </div>
+          <div class="form-row">
+            <label for="socialInstagram">Instagram</label>
+            <input type="text" id="socialInstagram" name="instagram">
+          </div>
+          <div class="form-row">
+            <label for="socialFacebook">Facebook</label>
+            <input type="text" id="socialFacebook" name="facebook">
+          </div>
+          <div class="form-row">
+            <label for="socialTwitter">X / Twitter</label>
+            <input type="text" id="socialTwitter" name="twitter">
+          </div>
+          <button type="submit" class="btn btn-gold btn-sm">Save Socials</button>
+          <div class="admin-status-msg" data-status-for="socialsForm"></div>
+        </form>
+      </div>
+
+      <!-- Contact submissions -->
+      <div class="admin-panel">
+        <h2>Contact Submissions</h2>
+        <p style="color:rgba(255,255,255,.72);font-size:.9rem;">
+          Contact form submissions are delivered by Formspree directly to your inbox
+          and archived on your Formspree dashboard.
+        </p>
+        <a href="https://formspree.io/forms" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Open Formspree Dashboard</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/admin-dashboard.js"></script>
+</body>
+</html>
