@@ -27,12 +27,12 @@ const defaultData = {
     channelUrl: process.env.DEFAULT_CHANNEL_URL || 'https://www.youtube.com/@mediablastspecials',
   },
   gallery: [
-    { id: 1, title: 'Season Premiere', imageUrl: '', videoId: 'jfKfPfyJRdk' },
-    { id: 2, title: 'Live Episode Coverage', imageUrl: '', videoId: 'jfKfPfyJRdk' },
-    { id: 3, title: 'Special Guest Episode', imageUrl: '', videoId: 'jfKfPfyJRdk' },
-    { id: 4, title: 'Behind the Scenes', imageUrl: '', videoId: 'jfKfPfyJRdk' },
-    { id: 5, title: 'Studio Broadcast', imageUrl: '', videoId: 'jfKfPfyJRdk' },
-    { id: 6, title: 'Season Highlight Reel', imageUrl: '', videoId: 'jfKfPfyJRdk' },
+    { id: 1, title: 'Season Premiere', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
+    { id: 2, title: 'Live Episode Coverage', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
+    { id: 3, title: 'Special Guest Episode', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
+    { id: 4, title: 'Behind the Scenes', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
+    { id: 5, title: 'Studio Broadcast', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
+    { id: 6, title: 'Season Highlight Reel', imageUrl: '', videoId: 'jfKfPfyJRdk', driveFileId: '' },
   ],
   socials: {
     youtube: 'https://www.youtube.com/@mediablastspecials',
