@@ -1,11 +1,17 @@
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import bcrypt from 'bcryptjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbFile = path.join(__dirname, 'data', 'db.json');
+const dataDir = path.join(__dirname, 'data');
+const dbFile = path.join(dataDir, 'db.json');
+
+// The data directory is gitignored (and git doesn't track empty dirs), so
+// it won't exist on a fresh clone/deploy until created here.
+fs.mkdirSync(dataDir, { recursive: true });
 
 const defaultData = {
   admin: null, // { email, passwordHash }
