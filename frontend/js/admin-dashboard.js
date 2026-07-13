@@ -221,4 +221,212 @@
       })
       .catch(function (err) { showStatus('galleryAddForm', err.message, true); });
   });
+
+  /* ==================== Site switcher (Network + Specials) ==================== */
+  var siteTabs = document.getElementById('siteTabs');
+  var panelsNetwork = document.getElementById('panels-network');
+  var panelsSpecials = document.getElementById('panels-specials');
+
+  function setActiveSite(site) {
+    document.querySelectorAll('.site-tab').forEach(function (tab) {
+      tab.classList.toggle('active', tab.dataset.site === site);
+    });
+    if (panelsNetwork) panelsNetwork.style.display = site === 'network' ? 'grid' : 'none';
+    if (panelsSpecials) panelsSpecials.style.display = site === 'specials' ? 'grid' : 'none';
+  }
+
+  if (siteTabs) {
+    siteTabs.addEventListener('click', function (e) {
+      var tab = e.target.closest('.site-tab');
+      if (!tab) return;
+      setActiveSite(tab.dataset.site);
+    });
+    setActiveSite(window.MB_ADMIN_DEFAULT_SITE || 'network');
+  }
+
+  /* ==================== MediaBlast Network content ==================== */
+  function loadNetworkContent() {
+    return apiFetch('/api/network/content').then(function (content) {
+      if (content.hero) {
+        setVal('netHeroTitle', content.hero.title);
+        setVal('netHeroTagline', content.hero.tagline);
+        setVal('netHeroCtaText', content.hero.ctaText);
+        setVal('netHeroCtaLink', content.hero.ctaLink);
+      }
+      if (content.live) {
+        setVal('netLiveStatus', content.live.status || 'offline');
+        setVal('netLiveTitle', content.live.streamTitle);
+        setVal('netLiveYoutube', content.live.youtubeLink);
+        setVal('netLiveM3u8', content.live.m3u8Url);
+        setVal('netLiveOffline', content.live.offlineVideoUrl);
+        updateBadge('netLiveBadgePreview', content.live.status);
+      }
+      if (content.socials) {
+        setVal('netSocialYoutube', content.socials.youtube);
+        setVal('netSocialKingschat', content.socials.kingschat);
+        setVal('netSocialTwitter', content.socials.twitter);
+      }
+      renderPrograms(content.programs || []);
+    });
+  }
+
+  function setVal(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.value = value || '';
+  }
+
+  function updateBadge(id, status) {
+    var badge = document.getElementById(id);
+    if (!badge) return;
+    if (status === 'live') {
+      badge.className = 'badge-mini live';
+      badge.textContent = 'LIVE';
+    } else {
+      badge.className = 'badge-mini offline';
+      badge.textContent = 'OFFLINE';
+    }
+  }
+
+  if (panelsNetwork) {
+    loadNetworkContent().catch(function (err) {
+      var list = document.getElementById('netProgramsList');
+      if (list) list.innerHTML = '<p class="admin-status-msg error">Failed to load content: ' + err.message + '</p>';
+    });
+  }
+
+  var netHeroForm = document.getElementById('netHeroForm');
+  if (netHeroForm) {
+    netHeroForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var payload = {
+        title: document.getElementById('netHeroTitle').value,
+        tagline: document.getElementById('netHeroTagline').value,
+        ctaText: document.getElementById('netHeroCtaText').value,
+        ctaLink: document.getElementById('netHeroCtaLink').value,
+      };
+      apiFetch('/api/admin/network/hero', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function () { showStatus('netHeroForm', 'Hero content saved.'); })
+        .catch(function (err) { showStatus('netHeroForm', err.message, true); });
+    });
+  }
+
+  var netLiveForm = document.getElementById('netLiveForm');
+  if (netLiveForm) {
+    netLiveForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var payload = {
+        status: document.getElementById('netLiveStatus').value,
+        streamTitle: document.getElementById('netLiveTitle').value,
+        youtubeLink: document.getElementById('netLiveYoutube').value,
+        m3u8Url: document.getElementById('netLiveM3u8').value,
+        offlineVideoUrl: document.getElementById('netLiveOffline').value,
+      };
+      apiFetch('/api/admin/network/live', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (data) {
+          updateBadge('netLiveBadgePreview', data.status);
+          showStatus('netLiveForm', 'Live settings saved.');
+        })
+        .catch(function (err) { showStatus('netLiveForm', err.message, true); });
+    });
+  }
+
+  var netSocialsForm = document.getElementById('netSocialsForm');
+  if (netSocialsForm) {
+    netSocialsForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var payload = {
+        youtube: document.getElementById('netSocialYoutube').value,
+        kingschat: document.getElementById('netSocialKingschat').value,
+        twitter: document.getElementById('netSocialTwitter').value,
+      };
+      apiFetch('/api/admin/network/socials', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function () { showStatus('netSocialsForm', 'Social links saved.'); })
+        .catch(function (err) { showStatus('netSocialsForm', err.message, true); });
+    });
+  }
+
+  function renderPrograms(items) {
+    var list = document.getElementById('netProgramsList');
+    if (!list) return;
+    list.innerHTML = '';
+    items.forEach(function (item) {
+      var row = document.createElement('div');
+      row.className = 'gallery-item-row';
+
+      var titleInput = document.createElement('input');
+      titleInput.type = 'text';
+      titleInput.value = item.title;
+      titleInput.placeholder = 'Title';
+
+      var tagInput = document.createElement('input');
+      tagInput.type = 'text';
+      tagInput.value = item.tag || '';
+      tagInput.placeholder = 'Tag';
+
+      var descInput = document.createElement('input');
+      descInput.type = 'text';
+      descInput.value = item.description || '';
+      descInput.placeholder = 'Description';
+
+      var imageInput = document.createElement('input');
+      imageInput.type = 'text';
+      imageInput.value = item.imageUrl || '';
+      imageInput.placeholder = 'Image URL';
+
+      var videoInput = document.createElement('input');
+      videoInput.type = 'text';
+      videoInput.value = item.videoUrl || '';
+      videoInput.placeholder = 'YouTube embed URL';
+
+      var saveBtn = document.createElement('button');
+      saveBtn.type = 'button';
+      saveBtn.className = 'btn btn-outline btn-sm';
+      saveBtn.textContent = 'Save';
+      saveBtn.addEventListener('click', function () {
+        apiFetch('/api/admin/network/programs/' + item.id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: titleInput.value, tag: tagInput.value, description: descInput.value, imageUrl: imageInput.value, videoUrl: videoInput.value }),
+        })
+          .then(function () { showStatus('netProgramAddForm', 'Program updated.'); })
+          .catch(function (err) { showStatus('netProgramAddForm', err.message, true); });
+      });
+
+      var deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'btn btn-danger btn-sm';
+      deleteBtn.textContent = 'Delete';
+      deleteBtn.addEventListener('click', function () {
+        if (!confirm('Delete "' + item.title + '"?')) return;
+        apiFetch('/api/admin/network/programs/' + item.id, { method: 'DELETE' })
+          .then(function () { row.remove(); showStatus('netProgramAddForm', 'Program deleted.'); })
+          .catch(function (err) { showStatus('netProgramAddForm', err.message, true); });
+      });
+
+      row.appendChild(titleInput);
+      row.appendChild(tagInput);
+      row.appendChild(descInput);
+      row.appendChild(imageInput);
+      row.appendChild(videoInput);
+      row.appendChild(saveBtn);
+      row.appendChild(deleteBtn);
+      list.appendChild(row);
+    });
+  }
+
+  var netProgramAddForm = document.getElementById('netProgramAddForm');
+  if (netProgramAddForm) {
+    netProgramAddForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var form = e.target;
+      var payload = { title: form.title.value, tag: form.tag.value, description: form.description.value, imageUrl: form.imageUrl.value, videoUrl: form.videoUrl.value };
+      apiFetch('/api/admin/network/programs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function () {
+          form.reset();
+          showStatus('netProgramAddForm', 'Program added.');
+          return loadNetworkContent();
+        })
+        .catch(function (err) { showStatus('netProgramAddForm', err.message, true); });
+    });
+  }
 })();

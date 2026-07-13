@@ -760,3 +760,56 @@ section { position: relative; padding: 96px 0; }
 }
 .badge-mini.live { background: rgba(220,38,38,.2); color: #ff5c5c; }
 .badge-mini.offline { background: rgba(255,255,255,.08); color: rgba(255,255,255,.6); }
+
+/* ---------- Combined admin: site switcher (Network + Specials) ---------- */
+:root {
+  --net-navy: #384090;
+  --net-cyan: #00a8e8;
+  --net-gradient: linear-gradient(135deg, #384090 0%, #00a8e8 100%);
+}
+
+.site-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 28px 0 8px;
+  flex-wrap: wrap;
+}
+
+.site-tab {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.14);
+  color: rgba(255,255,255,.7);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 10px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.site-tab:hover { border-color: rgba(255,255,255,.3); color: var(--white); }
+
+.site-tab.active[data-site="network"] {
+  background: var(--net-gradient);
+  border-color: transparent;
+  color: var(--white);
+}
+
+.site-tab.active[data-site="specials"] {
+  background: var(--gold-gradient);
+  border-color: transparent;
+  color: var(--navy-deep);
+}
+
+.admin-panel.network-panel { border-color: rgba(0,168,232,.25); }
+.admin-panel.network-panel h2 { color: var(--net-cyan); }
+.admin-panel.network-panel .form-row input:focus,
+.admin-panel.network-panel .form-row textarea:focus,
+.admin-panel.network-panel select:focus { border-color: var(--net-cyan); }
+
+.btn-net {
+  background: var(--net-gradient);
+  color: var(--white);
+  box-shadow: 0 8px 24px rgba(0,168,232,.25);
+}

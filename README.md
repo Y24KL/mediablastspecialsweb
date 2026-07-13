@@ -75,6 +75,18 @@ plaintext.
 | GET/POST | `/api/admin/gallery` | Bearer | List / add gallery items |
 | PUT/DELETE | `/api/admin/gallery/:id` | Bearer | Update / remove a gallery item |
 | PUT | `/api/admin/socials` | Bearer | Update social links |
+| GET | `/api/network/content` | — | Public: MediaBlast Network's hero, live, programs, socials |
+| PUT | `/api/admin/network/hero` | Bearer | Update Network hero title/tagline/CTA |
+| PUT | `/api/admin/network/live` | Bearer | Update Network live-stream status/YouTube link/m3u8 URL/offline video/title |
+| GET/POST | `/api/admin/network/programs` | Bearer | List / add Network programs |
+| PUT/DELETE | `/api/admin/network/programs/:id` | Bearer | Update / remove a Network program |
+| PUT | `/api/admin/network/socials` | Bearer | Update Network social links |
+
+This one backend and one admin login manage **both** MediaBlast Specials
+(fields above) and MediaBlast Network (the `network`-prefixed routes) — the
+same `db.json` just carries a namespaced `network` object alongside the
+existing top-level fields, so nothing about Specials' existing API shape
+changed.
 
 Content is stored in `backend/data/db.json` (gitignored, created on first run).
 
