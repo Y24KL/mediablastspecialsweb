@@ -42,7 +42,7 @@ contentRouter.put('/admin/live', requireAuth, async (req, res) => {
 /* ---------------- Admin: socials ---------------- */
 
 contentRouter.put('/admin/socials', requireAuth, async (req, res) => {
-  const allowed = ['youtube', 'instagram', 'facebook', 'twitter'];
+  const allowed = ['youtube', 'instagram', 'kingschat', 'twitter'];
   for (const key of allowed) {
     if (req.body && req.body[key] !== undefined) {
       db.data.socials[key] = String(req.body[key]);
